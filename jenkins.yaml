@@ -1,6 +1,6 @@
 jenkins:
   agentProtocols:
-  - "JNLP2-connect"
+  # - "JNLP2-connect"
   - "JNLP4-connect"
   - "Ping"
   #TODO: Switch to Matrix Auth once 2.4 is in the envelope
@@ -42,7 +42,7 @@ jenkins:
       - id: "admin"
         password: "admin"
   slaveAgentPort: 50000
-  systemMessage: "This is a demo CJD instance for Jenkins Configuration-as-Code"
+  systemMessage: "<h1><a href='https://www.cloudbees.com/products/cloudbees-jenkins-distribution'>CloudBees Jenkins Distribution</a> with <a href='https://jenkins.io/projects/jcasc/'>Configuration-as-Code</a></h1><br>Technical preview"
   updateCenter:
     sites:
     - id: "cap-cloudbees-jenkins-distribution"
@@ -78,9 +78,9 @@ jenkins:
       retentionStrategy: "always"
   - permanent:
       launcher:
-        sSHLauncher:
+        ssh:
           credentialsId: "acmeuser-creds-id"
-          host: "myunixagents.acmecorp.com"
+          host: "myunixagents.example.com"
           maxNumRetries: 5
           port: 22
           retryWaitTime: 30
@@ -88,20 +88,20 @@ jenkins:
       name: "SSH Build Agent - by SSH Slaves Plugin"
       numExecutors: 2
       retentionStrategy: "always"
-  - permanent:
-      labelString: "wmi"
-      launcher:
-        managedWindowsServiceLauncher:
-          account:
-            anotherUser:
-              password: "{AQAAABAAAAAQrFzG4eivzoRgjLSQ4b2EO+B/N4fMTAPWba9WXwrvVIM=}"
-              userName: "admin"
-          host: "mywindowshost.acmecorp.com"
-          password: "{AQAAABAAAAAQd9xCwocDRwcJ1cxFJjzXzoWM77CODd79aokmxCWR8rE=}"
-          userName: "ACMECORP/Admin"
-      name: "WMI Windows Agent"
-      numExecutors: 2
-      retentionStrategy: "always"
+  # - permanent:
+  #     labelString: "wmi"
+  #     launcher:
+  #       managedWindowsServiceLauncher:
+  #         account:
+  #           anotherUser:
+  #             password: "{AQAAABAAAAAQrFzG4eivzoRgjLSQ4b2EO+B/N4fMTAPWba9WXwrvVIM=}"
+  #             userName: "admin"
+  #         host: "mywindowshost.example.com"
+  #         password: "{AQAAABAAAAAQd9xCwocDRwcJ1cxFJjzXzoWM77CODd79aokmxCWR8rE=}"
+  #         userName: "ACMECORP/Admin"
+  #     name: "WMI Windows Agent"
+  #     numExecutors: 2
+  #     retentionStrategy: "always"
   clouds:
   - amazonEC2:
       cloudName: "EC2-sample-config"
@@ -130,54 +130,12 @@ jenkins:
         useDedicatedTenancy: false
         useEphemeralDevices: false
       useInstanceProfileForCredentials: false
-  - kubernetes:
-      connectTimeout: 5
-      containerCapStr: "10"
-      credentialsId: "acmeuser-creds-id"
-      jenkinsUrl: "http://localhost:8080"
-      maxRequestsPerHostStr: "32"
-      name: "kubernetes"
-      namespace: "acmecorp"
-      readTimeout: 15
-      serverCertificate: "Stub: Kubernetes server certificate key"
-      serverUrl: "https://k8s/acmecorp.com"
-      templates:
-      - containers:
-        - args: "cat"
-          command: "/bin/sh -c"
-          image: "jenkins/jnlp-slave"
-          livenessProbe:
-            failureThreshold: 1
-            initialDelaySeconds: 2
-            periodSeconds: 3
-            successThreshold: 4
-            timeoutSeconds: 5
-          name: "jnlp"
-          ttyEnabled: true
-        - args: "cat"
-          command: "/bin/sh -c"
-          image: "elasticsearch"
-          livenessProbe:
-            failureThreshold: 1
-            initialDelaySeconds: 2
-            periodSeconds: 3
-            successThreshold: 4
-            timeoutSeconds: 5
-          name: "elasticsearch"
-          ttyEnabled: true
-        instanceCap: 5
-        instanceCapStr: "5"
-        label: "linux stub"
-        name: "Test Pod"
-        namespace: "acmecorp"
-        workspaceVolume:
-          emptyDirWorkspaceVolume:
-            memory: false
+
 aws:
   awsCredentials:
     region: "us-east-1"
   s3:
-    container: "s3.acmecorp.com"
+    container: "s3.example.com"
     prefix: "myjenkins/"
 credentials:
   system:
@@ -229,13 +187,13 @@ unclassified:
     defaultBody: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:\r\n\r\nCheck\
       \ console output at $BUILD_URL to view the results."
     defaultContentType: "text/plain"
-    defaultRecipients: "users@acmecorp.com"
+    defaultRecipients: "users@example.com"
     defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
-    defaultSuffix: "@acmecorp.com"
+    defaultSuffix: "@example.com"
     maxAttachmentSize: -1
     maxAttachmentSizeMb: 10
     precedenceBulk: false
-    smtpServer: "smtp.acmecorp.com"
+    smtpServer: "smtp.example.com"
     useSsl: false
     watchingEnabled: false
   gitHubConfiguration:
@@ -248,7 +206,7 @@ unclassified:
     hookUrl: "http://localhost:8080/github-webhook/"
   gitSCM:
     createAccountBasedOnEmail: true
-    globalConfigEmail: "username@acmecorp.com"
+    globalConfigEmail: "username@example.com"
     globalConfigName: "username"
   globalLibraries:
     libraries:
@@ -262,7 +220,7 @@ unclassified:
               - name: "*/myprodbranch"
               browser:
                 assemblaWeb:
-                  repoUrl: "assembla.acmecorp.com"
+                  repoUrl: "assembla.example.com"
               buildChooser: "default"
               doGenerateSubmoduleConfigurations: false
               extensions:
@@ -271,7 +229,7 @@ unclassified:
               - checkoutOption:
                   timeout: 60
               - userIdentity:
-                  email: "customuser@acmecorp.com"
+                  email: "customuser@example.com"
                   name: "custom user"
               - preBuildMerge:
                   options:
@@ -279,15 +237,15 @@ unclassified:
                     mergeStrategy: RECURSIVE
                     mergeTarget: "master"
               gitTool: "Default"
-              submoduleCfg:
-              - submoduleName: "submodule-1"
-                branches:
-                - "mybranch-1"
-                - "mybranch-2"
-              - submoduleName: "submodule-2"
-                branches:
-                - "mybranch-3"
-                - "mybranch-4"
+              # submoduleCfg:
+              # - submoduleName: "submodule-1"
+              #   branches:
+              #   - "mybranch-1"
+              #   - "mybranch-2"
+              # - submoduleName: "submodule-2"
+              #   branches:
+              #   - "mybranch-3"
+              #   - "mybranch-4"
               userRemoteConfigs:
               - credentialsId: "acmeuser-creds-id"
                 url: "https://git.acmecorp/testgitlib.git"
@@ -320,8 +278,8 @@ unclassified:
   mailer:
     adminAddress: "address not configured yet <nobody@nowhere>"
     charset: "UTF-8"
-    defaultSuffix: "@acmecorp.com"
-    smtpHost: "smtp.acmecorp.com"
+    defaultSuffix: "@example.com"
+    smtpHost: "smtp.example.com"
     useSsl: false
   metricsAccessKey:
     accessKeys:
@@ -385,16 +343,16 @@ tool:
           installers:
           - zip:
               label: "linux"
-              url: "https://storage.acmecorp.com/docker.zip"
+              url: "https://storage.example.com/docker.zip"
   git:
     installations:
     - home: "git"
       name: "Default"
     # BUG - https://issues.jenkins-ci.org/browse/JENKINS-57326
-    - home: "jgit"
-      name: "jgit"
-    - home: "jgitapache"
-      name: "jgitapache"
+    # - home: "jgit"
+    #   name: "jgit"
+    # - home: "jgitapache"
+    #   name: "jgitapache"
   gradle:
     installations:
     - name: "Gradle-default"
@@ -406,7 +364,7 @@ tool:
           - zip:
               label: "arm"
               subdir: "gradle-1.2.3/arm"
-              url: "https://share.acmecorp.com/tools/gradle/1.2.3"
+              url: "https://share.example.com/tools/gradle/1.2.3"
     - name: "Gradle-5.5.6"
       properties:
       - installSource:
@@ -415,7 +373,7 @@ tool:
               id: "5.4"
           - zip:
               subdir: "gradle-5.5.6"
-              url: "https://share.acmecorp.com/tools/gradle/5.56"
+              url: "https://share.example.com/tools/gradle/5.56"
   jdk:
     installations:
     - name: "loca-jdk"
