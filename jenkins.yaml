@@ -102,34 +102,34 @@ jenkins:
   #     name: "WMI Windows Agent"
   #     numExecutors: 2
   #     retentionStrategy: "always"
-  clouds:
-  - amazonEC2:
-      cloudName: "EC2-sample-config"
-      credentialsId: "acmecorp-aws"
-      privateKey: "Stub: EC2PrivateKey"
-      instanceCapStr: "8"
-      templates:
-      - ami: "windows64x"
-        amiType:
-          windowsData:
-            password: "{AQAAABAAAAAQtIAG0C6hQhDx3wnlr6dCxhrxfHkeVT2mQLWGnVh62Qo=}"
-            useHTTPS: false
-        associatePublicIp: false
-        connectBySSHProcess: false
-        deleteRootOnTermination: false
-        description: "Windows Slave"
-        ebsOptimized: false
-        idleTerminationMinutes: "30"
-        mode: NORMAL
-        monitoring: false
-        numExecutors: 1
-        remoteFS: "/remote/root"
-        stopOnTerminate: false
-        t2Unlimited: false
-        type: T3Nano
-        useDedicatedTenancy: false
-        useEphemeralDevices: false
-      useInstanceProfileForCredentials: false
+  # clouds:
+  # - amazonEC2:
+  #     cloudName: "EC2-sample-config"
+  #     credentialsId: "acmecorp-aws"
+  #     privateKey: "Stub: EC2PrivateKey"
+  #     instanceCapStr: "8"
+  #     templates:
+  #     - ami: "windows64x"
+  #       amiType:
+  #         windowsData:
+  #           password: "{AQAAABAAAAAQtIAG0C6hQhDx3wnlr6dCxhrxfHkeVT2mQLWGnVh62Qo=}"
+  #           useHTTPS: false
+  #       associatePublicIp: false
+  #       connectBySSHProcess: false
+  #       deleteRootOnTermination: false
+  #       description: "Windows Slave"
+  #       ebsOptimized: false
+  #       idleTerminationMinutes: "30"
+  #       mode: NORMAL
+  #       monitoring: false
+  #       numExecutors: 1
+  #       remoteFS: "/remote/root"
+  #       stopOnTerminate: false
+  #       t2Unlimited: false
+  #       type: T3Nano
+  #       useDedicatedTenancy: false
+  #       useEphemeralDevices: false
+  #     useInstanceProfileForCredentials: false
 
 aws:
   awsCredentials:
